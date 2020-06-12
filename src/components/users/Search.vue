@@ -1,39 +1,33 @@
 <template>
   <div>
     <form class="form" @submit="onSubmit">
-      <input
-        type="text"
-        name="text"
-        placeholder="Search users.."
-        v-model="text"
-      />
+      <input type="text" name="text" placeholder="Search users.." v-model="text" />
       <input type="submit" value="Search" class="btn btn-dark btn-block" />
     </form>
-    <!-- <button
-      v-if="users.length > 0"
-      class="btn btn-light btn-block"
-      onClick="{clearUsers}"
-    >
-      Clear
-    </button> -->
+    <!-- <button v-if="users.length > 0" class="btn btn-light btn-block" onclick="{clearUsers}">Clear</button> -->
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      text: '',
+      text: ""
     };
   },
   methods: {
-    ...mapActions(['searchUsers']),
+    ...mapActions(["searchUsers", "setAlert"]),
     onSubmit(e) {
       e.preventDefault();
-      this.searchUsers(this.text);
-    },
-  },
+      if (this.text === "") {
+        this.setAlert("Please Enter Something");
+      } else {
+        this.searchUsers(this.text);
+        this.text = "";
+      }
+    }
+  }
 };
 </script>
 
